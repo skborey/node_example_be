@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const Data = require('./respository/restaurant');
 const config = require('./config.json');
+var ObjectId = require('mongodb').ObjectID;
 const defaultConfig = config.development;
 
 const API_PORT = defaultConfig.app_port;
@@ -27,12 +28,23 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
-// test get method
-router.get('/restaurant', (req, res) => {
-  Data.find((err, data) => {
+// Get restaurants with query parames: ?name=res1
+router.get('/restaurants', (req, res) => {
+
+  var params = req.query;
+  
+  var condition = {};
+  if (params.name) condition.name = params.name;
+  if (params.startAfter) condition._id = { $gt: ObjectId(params.startAfter) }
+  if (params.endBefore) condition._id = { $gt: ObjectId(params.endBefore) }
+
+  Data.find( condition, (err, data) => {
     if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true, data: data });
-  });
+    return res.json({
+      success: true,
+      data: data
+    });
+  }).limit(10).sort({_id: 1});
 });
 
 // append /api for our http requests

@@ -6,9 +6,11 @@ const Schema = mongoose.Schema;
 const DataSchema = new Schema(
   {
     name: String,
-    opened: String
+    hours: String
   },
-  { collection: 'restaurant' }
+  { 
+    collection: 'restaurant'
+  }
 );
 
 // export the new Schema so we could modify it using Node.js
