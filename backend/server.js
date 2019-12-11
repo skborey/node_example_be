@@ -36,7 +36,7 @@ router.get('/restaurants', (req, res) => {
   var condition = {};
   if (params.name) condition.name = params.name;
   if (params.startAfter) condition._id = { $gt: ObjectId(params.startAfter) }
-  if (params.endBefore) condition._id = { $gt: ObjectId(params.endBefore) }
+  if (params.endBefore) condition._id = { $lt: ObjectId(params.endBefore) }
 
   Data.find( condition, (err, data) => {
     if (err) return res.json({ success: false, error: err });
