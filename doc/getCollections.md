@@ -41,3 +41,21 @@
     }
 }
 ```
+
+> PUT /api/v1/collections
+
+```
+{
+	"name": "test collection",
+	"owner_id": "skborey@gmail.com"
+}
+```
+
+> POST api/v1/collaborations/rename
+
+``
+{
+	"new_name": "sok borey",
+	"id": "5df67c454cd22d3ac5125f1f"
+}
+``

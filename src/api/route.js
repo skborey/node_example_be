@@ -35,5 +35,6 @@ router.delete('/collections/:id', Auth.verifyToken, CollectionService.deleteColl
  * Collaboration Api
  */
 router.put('/collaborations', Auth.verifyToken, CollaborationService.addNewCollaboration);
+router.post('/collaborations/rename', Auth.verifyToken, CollaborationService.renameCollaboration);
 
 module.exports = router;

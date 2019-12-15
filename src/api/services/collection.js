@@ -1,4 +1,4 @@
-const CollectionRepo = require('../db/collection');
+const CollectionRepo = require('../db/collection.js');
 const RestaurantRepo = require('../db/restaurant');
 const CollaborationRepo = require('../db/collaboration');
 
@@ -61,19 +61,27 @@ const service = {
         let name = req.body.name;
         let owner_email = req.decoded.email;
         if (name && owner_email) {
-            const newCollection = { // field name must be stirng otherwise cannot insert except field of empty array
-                "name": name,
-                "owner_email": owner_email,
-                "restaurants": [],
-                "collaborations": []
-            }
 
-            CollectionRepo.insertMany({newCollection}, (err, re) => {
+            // declear here cannot insert all fields
+            // let newCollection = { // field name must be stirng otherwise cannot insert except field of empty array
+            //     "name": name,
+            //     "owner_email": owner_email,
+            //     "restaurants": [],
+            //     "collaborations": []
+            // }
+
+            CollectionRepo.insertMany({
+                    "name": name,
+                    "owner_email": owner_email,
+                    "restaurants": [],
+                    "collaborations": []
+                }, (err, data) => {
 
                 if (err) return res.status(500).json({ success: false, message: "Internal Sever Error." });
 
                 return res.json({
                     success: true,
+                    data: data,
                     message: "New collection added successfully."
                 });
             });
