@@ -3,7 +3,8 @@ const router = express.Router();
 
 const Register = require('./auth/register');
 const Login = require('./auth/login');
-const Authorization = require('./auth/verify');
+const Logout = require('./auth/logout');
+const Auth = require('./auth/verify');
 const RestaurantService = require('./services/restaurant');
 const CollectionService = require('./services/collection');
 
@@ -12,6 +13,7 @@ const CollectionService = require('./services/collection');
  */
 router.post('/register', Register);
 router.post('/login', Login);
+router.post('/logout',Auth.verifyToken, Logout);
 
 /**
  * Restaurant Api
@@ -21,6 +23,6 @@ router.get('/restaurants', RestaurantService.getRestaurants);
 /**
  * Collection Api
  */
-router.get('/collections', Authorization.verifyToken, CollectionService.getCollections);
+router.get('/collections', Auth.verifyToken, CollectionService.getCollections);
 
 module.exports = router;
