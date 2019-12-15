@@ -12,20 +12,20 @@ let verifyToken = (req, res, next) => {
     token = token.slice(7, token.length);
   }
 
-  if (token) { // cehck it is not in invalidToken
+  if (token) {
+
+    /**
+     * Token that not expired yet but already logout, shouldn't be invaid, cannot use to login again
+     */
     InvalidTokenRepo.exists({'token': token}, (err, r) => {
+
       if (err || r) {
-        return res.json({
-          success: false,
-          message: 'Token is not valid'
-        });
+        return res.json({success: false, message: 'Token is not valid'});
       } else {
+
         jwt.verify(token, secret, (err, decoded) => {
-          if (err) {
-            return res.json({
-              success: false,
-              message: 'Token is not valid'
-            });
+
+          if (err) { return res.json({ success: false, message: 'Token is not valid' });
           } else {
             req.decoded = decoded;
             next();
@@ -34,10 +34,7 @@ let verifyToken = (req, res, next) => {
       }
     });
   } else {
-    return res.json({
-      success: false,
-      message: 'Auth token is not supplied'
-    });
+    return res.json({ success: false, message: 'Auth token is not supplied'});
   }
 }
 

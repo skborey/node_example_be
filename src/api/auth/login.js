@@ -9,7 +9,11 @@ let login = (req, res) => {
 
     if (email && password) {
 
-        if (true) { // verify email and password
+        /**
+         * Email and Password is correct will allow to login to system and get token
+         * @Todo
+         */
+        if (true) {
 
             let token = jwt.sign({email: email}, secret, { expiresIn: '24h'});
 
