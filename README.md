@@ -53,6 +53,8 @@ Rest Api using `express framework` with `mongodb` as database to serve the follo
 
 # Available API
 
+> Deploy url: https://isitopend-be.herokuapp.com/
+
 | Method  | Endpoint  | Reqired Header  | Param  | Request Body |
 |---|---|---|---|---|
 | POST | api/v1/register  | - | -  | ```{'email': 'skborey@gmail.com', 'password': 'mypassword'``` |
