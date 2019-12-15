@@ -13,7 +13,7 @@ const CollectionService = require('./services/collection');
  */
 router.post('/register', Register);
 router.post('/login', Login);
-router.post('/logout',Auth.verifyToken, Logout);
+router.get('/logout',Auth.verifyToken, Logout);
 
 /**
  * Restaurant Api

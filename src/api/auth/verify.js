@@ -9,19 +9,17 @@ let verifyToken = (req, res, next) => {
 
   if (token) {
     if (token.startsWith('Bearer ')) {
-      // Remove Bearer from string
       token = token.slice(7, token.length);
     }
 
     /**
      * Token that not expired yet but already logout, shouldn't be invaid, cannot use to login again
      */
-    InvalidTokenRepo.exists({'token': token}, (err, r) => {
+    InvalidTokenRepo.exists({'token': token}, (err, isExist) => {
 
-      if (err || r) {
+      if (err || isExist) {
         return res.json({success: false, message: 'Token is not valid'});
       } else {
-
         jwt.verify(token, secret, (err, decoded) => {
 
           if (err) { return res.json({ success: false, message: 'Token is not valid' });
