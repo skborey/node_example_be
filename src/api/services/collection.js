@@ -80,7 +80,31 @@ const service = {
         } else {
             return res.status(400).json({
                 success: false,
-                message: "Invalid Id"
+                message: "Invalid request"
+            });
+        }
+    },
+
+    renameCollection: (req, res) => {
+
+        let id = req.body.id;
+        let newName = req.body.new_name;
+        
+        if (id && newName) {
+
+            CollectionRepo.updateOne({_id: id}, {name: newName}, (err, re) => {
+
+                if (err) return res.status(500).json({ success: false, message: "Internal Sever Error." });
+
+                return res.json({
+                    success: true,
+                    message: "Collection rename successfully."
+                });
+            });
+        } else {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid request"
             });
         }
     },
