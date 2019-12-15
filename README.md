@@ -1,2 +1,13 @@
-# glints_fullstack_development_test
-Fullstack Development Test
+# Backend
+
+> Start server
+
+```
+node sever.js
+```
+or (auto reload server if having any change)
+```
+nodemon sever.js
+```
+
+> Pakages `bcrypt`
