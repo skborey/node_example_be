@@ -53,7 +53,9 @@ Rest Api using `express framework` with `mongodb` as database to serve the follo
 
 # Available API
 
-> Deploy url: https://isitopend-be.herokuapp.com/
+> Deploy domain: https://isitopend-be.herokuapp.com/
+
+> Check health: https://isitopend-be.herokuapp.com/ping
 
 | Method  | Endpoint  | Reqired Header  | Param  | Request Body |
 |---|---|---|---|---|
