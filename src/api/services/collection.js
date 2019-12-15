@@ -144,7 +144,9 @@ const service = {
 
             let condition = {}
 
-            if (collaborationId) condition["collaborations"] = collaborationId;
+            if (collaborationId) {
+                condition["collaborations"] = collaborationId;
+            }
             if (restaurantId) condition["restaurants"] = restaurantId;
 
             CollectionRepo.updateOne({_id: collectionId}, {$addToSet: condition}, (err, re) => {

@@ -7,6 +7,7 @@ const Logout = require('./auth/logout');
 const Auth = require('./auth/verify');
 const RestaurantService = require('./services/restaurant');
 const CollectionService = require('./services/collection');
+const CollaborationService = require('./services/collaboration');
 
 /**
  * Authorization
@@ -29,5 +30,10 @@ router.post('/collections/rename', Auth.verifyToken, CollectionService.renameCol
 router.post('/collections/relation', Auth.verifyToken, CollectionService.addRelation);
 router.delete('/collections/relation', Auth.verifyToken, CollectionService.removeRelation);
 router.delete('/collections/:id', Auth.verifyToken, CollectionService.deleteCollectionById); // this order will effect to rounting relatin could be consider as :id
+
+/**
+ * Collaboration Api
+ */
+router.put('/collaborations', Auth.verifyToken, CollaborationService.addNewCollaboration);
 
 module.exports = router;
