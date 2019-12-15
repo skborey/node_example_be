@@ -60,7 +60,7 @@ Rest Api using `express framework` with `mongodb` as database to serve the follo
 | POST | api/v1/register  | - | -  | ```{'email': 'skborey@gmail.com', 'password': 'mypassword'``` |
 | POST | api/v1/login  | -  | -  | ```{'email': 'skborey@gmail.com', 'password': 'mypassword'``` |
 | GET | api/v1/logout  | `authorization`  | -  | - |
-| GET | api/v1/restaurants  | `authorization`  | - | - |
+| GET | api/v1/restaurants  | - | - | - |
 | GET | api/v1/collections  | `authorization` | -  | - |
 | PUT | api/v1/collections  | `authorization` | -  | ```{'name': 'Borey', 'owner_email':'skborey@gmail.com'}``` |
 | POST | api/v1/collections/rename  | `authorization` | -  | ```{'id': '5df6614022eb0971498f3b6c', 'new_name': 'Borey Sok'}``` |
