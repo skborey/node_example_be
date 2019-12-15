@@ -53,7 +53,7 @@ Rest Api using `express framework` with `mongodb` as database to serve the follo
 
 # Available API
 
-| Method  | Endpoint  | Reqired Header  | Param  | Body Field |
+| Method  | Endpoint  | Reqired Header  | Param  | Request Body |
 |---|---|---|---|---|
 | POST | api/v1/register  | - | -  | ```{'email': 'skborey@gmail.com', 'password': 'mypassword'``` |
 | POST | api/v1/login  | -  | -  | ```{'email': 'skborey@gmail.com', 'password': 'mypassword'``` |
@@ -65,5 +65,5 @@ Rest Api using `express framework` with `mongodb` as database to serve the follo
 | POST | api/v1/collections/relation  | `authorization` | - | ```{ 'collection_id': '5df6614022eb0971498f3b6c', 'collaboration_id': '5df67bb3c85f853a78f2f90c', 'restaurant_id':'5df67bd7af54e63a834d25a9'}``` |
 | DELETE | api/v1/collections/relation  | `authorization` | -  | ```{ 'collection_id': '5df6614022eb0971498f3b6c', 'collaboration_id': '5df67bb3c85f853a78f2f90c', 'restaurant_id':'5df67bd7af54e63a834d25a9'}```|
 | DELETE | api/v1/collections/:id  | `authorization` | {id}  | - |
-| PUT | api/v1/collaborations  | `authorization` | {id}  | -  |
+| PUT | api/v1/collaborations  | `authorization` | -  | -  |
 | POST | api/v1/collaborations/rename  | `authorization` | -  | ```{'name': 'Borey', 'owner_email':'skborey@gmail.com'}```  |
