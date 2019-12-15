@@ -25,7 +25,9 @@ router.get('/restaurants', RestaurantService.getRestaurants);
  */
 router.get('/collections', Auth.verifyToken, CollectionService.getCollections);
 router.put('/collections', Auth.verifyToken, CollectionService.addNewCollection);
-router.post('/collections', Auth.verifyToken, CollectionService.renameCollection);
+router.post('/collections/rename', Auth.verifyToken, CollectionService.renameCollection);
 router.delete('/collections/:id', Auth.verifyToken, CollectionService.deleteCollectionById);
+
+router.post('/collections', Auth.verifyToken, CollectionService.addRestaurantAndCollaborationToCollection);
 
 module.exports = router;

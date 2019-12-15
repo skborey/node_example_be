@@ -132,7 +132,37 @@ const service = {
                 message: "Invalid Id"
             });
         }
-    }
+    },
+
+    addRestaurantAndCollaborationToCollection: (req, res) => {
+
+        let collectionId = req.body.collection_id;
+        let collaborationId = req.body.collaboration_id;
+        let restaurantId = req.body.restaurant_id
+    
+        if (collectionId) {
+
+            let condition = {}
+
+            if (collaborationId) condition["collaborations"] = collaborationId;
+            if (restaurantId) condition["restaurants"] = restaurantId;
+
+            CollectionRepo.updateOne({_id: collectionId}, {$addToSet: condition}, (err, re) => {
+
+                if (err) return res.status(500).json({ success: false, message: "Internal Sever Error." });
+
+                return res.json({
+                    success: true,
+                    message: "Added successfully."
+                });
+            });
+        } else {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid request"
+            });
+        }
+    },
 }
 
 module.exports = service;
