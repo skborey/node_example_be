@@ -10,7 +10,6 @@ Rest Api using `express framework` with `mongodb` as database to serve the follo
 # Project structure
 
 ```
-+-- doc                 -> folder containing assistance and required resources for the project
 +-- src
 |   +-- api
 |       +-- auth        -> folder containing authorization logic
