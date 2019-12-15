@@ -1,6 +1,6 @@
-const CollectionRepo = require('../db/collection.js');
-const RestaurantRepo = require('../db/restaurant.js');
-const CollaborationRepo = require('../db/collaboration.js');
+const CollectionRepo = require('../db/collection');
+const RestaurantRepo = require('../db/restaurant');
+const CollaborationRepo = require('../db/collaboration');
 
 const service = {
 
@@ -54,6 +54,35 @@ const service = {
                 });
             });
         }).sort({_id: 1});
+    },
+
+    addNewCollection: (req, res) => {
+
+        let name = req.body.name;
+        let owner_email = req.decoded.email;
+        if (name && owner_email) {
+            const newCollection = { // field name must be stirng otherwise cannot insert except field of empty array
+                "name": name,
+                "owner_email": owner_email,
+                "restaurants": [],
+                "collaborations": []
+            }
+
+            CollectionRepo.insertMany({newCollection}, (err, re) => {
+
+                if (err) return res.status(500).json({ success: false, message: "Internal Sever Error." });
+
+                return res.json({
+                    success: true,
+                    message: "New collection added successfully."
+                });
+            });
+        } else {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid Id"
+            });
+        }
     },
 
     deleteCollectionById: (req, res) => {
