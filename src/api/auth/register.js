@@ -28,7 +28,7 @@ let register = (req, res) => {
                     } else {
                         return res.json({
                             success: true,
-                            message: "User is alerady with email: " + email
+                            message: "Account is created successfully with email: " + email
                         });
                     }
                 });

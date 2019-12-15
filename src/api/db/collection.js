@@ -4,13 +4,14 @@ const Schema = mongoose.Schema;
 const CollectionSchema = new Schema(
   {
     _id: String,
-    title: String,
-    restaurant: Array,
-    collaboration: Array
+    name: String,
+    owner_email: String,
+    restaurants: Array,
+    collaborations: Array
   },
   {
     collection: 'collection'
   }
 );
 
-module.exports = mongoose.model('Colection', CollectionSchema);
+module.exports = mongoose.model('Collection', CollectionSchema);
