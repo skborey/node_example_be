@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
 const CollectionSchema = new Schema(
   {
-    _id: String,
     name: String,
     owner_email: String,
     restaurants: Array,

@@ -54,6 +54,31 @@ const service = {
                 });
             });
         }).sort({_id: 1});
+    },
+
+    deleteCollectionById: (req, res) => {
+        console.log(req.params.id);
+        if (req.params.id) {
+            CollectionRepo.deleteOne({_id: req.params.id}, (err, data) => {
+                if (err) return res.status(500).json({ success: false, message: "Internal Sever Error." });
+                else {
+                    if (data.deletedCount == 0)
+                        return res.json({
+                            success: true,
+                            message: "Collection is not exist."
+                        });
+                    else return res.json({
+                        success: true,
+                        message: "Collection is removed successfully."
+                    });
+                }
+            });
+        } else {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid Id"
+            });
+        }
     }
 }
 

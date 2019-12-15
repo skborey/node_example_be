@@ -24,5 +24,6 @@ router.get('/restaurants', RestaurantService.getRestaurants);
  * Collection Api
  */
 router.get('/collections', Auth.verifyToken, CollectionService.getCollections);
+router.delete('/collections/:id', Auth.verifyToken, CollectionService.deleteCollectionById);
 
 module.exports = router;
