@@ -71,3 +71,49 @@ Rest Api using `express framework` with `mongodb` as database to serve the follo
 | DELETE | api/v1/collections/:id  | `authorization` | {id}  | - |
 | PUT | api/v1/collaborations  | `authorization` | -  | -  |
 | POST | api/v1/collaborations/rename  | `authorization` | -  | ```{'name': 'Borey', 'owner_email':'skborey@gmail.com'}```  |
+
+### Example request and response of getting collections
+
+> Sample request
+
+```
+curl -X GET \
+  https://isitopend-be.herokuapp.com/api/v1/collections \
+  -H 'Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNrYm9yZXlAZ21haWwuY29tIiwiaWF0IjoxNTc2NDU0OTM2LCJleHAiOjE1NzY1NDEzMzZ9.qjz5fFwRFHp7dh7jcifD1s3lSsmo5uH8eSz6ZuDTazE
+```
+
+> Sample response data
+
+```
+{
+    "success": true,
+    "data": {
+        "collections": {
+            "5df553709a2f48293c99afdf": {
+                "restaurants": [],
+                "collaborations": [
+                    "5df6614022eb0971498f3b6c"
+                ],
+                "_id": "5df553709a2f48293c99afdf",
+                "name": "The weekend favorite",
+                "owner_email": "skborey@gmail.com"
+            },
+            "5df665c522eb0971498f3d6a": {
+                "restaurants": [],
+                "collaborations": [],
+                "_id": "5df665c522eb0971498f3d6a",
+                "name": "New collections new ------4",
+                "owner_email": "skborey@gmail.com"
+            }
+        },
+        "restaurants": {},
+        "collaborations": {
+            "5df6614022eb0971498f3b6c": {
+                "_id": "5df6614022eb0971498f3b6c",
+                "name": "Borey",
+                "email": "skborey@mailsac.com"
+            }
+        }
+    }
+}
+```
