@@ -5,6 +5,7 @@ const Register = require('./auth/register');
 const Login = require('./auth/login');
 const Logout = require('./auth/logout');
 const Auth = require('./auth/verify');
+const User = require('./services/user');
 const RestaurantService = require('./services/restaurant');
 const CollectionService = require('./services/collection');
 const CollaborationService = require('./services/collaboration');
@@ -15,6 +16,11 @@ const CollaborationService = require('./services/collaboration');
 router.post('/register', Register);
 router.post('/login', Login);
 router.get('/logout',Auth.verifyToken, Logout);
+
+/**
+ * Users
+ */
+router.get('/user', Auth.verifyToken, User.getUser);
 
 /**
  * Restaurant Api
