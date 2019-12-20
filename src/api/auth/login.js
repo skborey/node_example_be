@@ -32,11 +32,11 @@ let login = (req, res) => {
                     return res.json({success: false, message: 'Incorrect email or password.'});
                 }
             } else {
-                return res.status(403).json({success: false, message: 'User is not exist.'});
+                return res.json({success: false, message: 'User is not exist.'});
             }
         });
     } else {
-        res.status(400).json({
+        res.json({
             success: false,
             message: 'Authentication failed! Please check the request'
         });
