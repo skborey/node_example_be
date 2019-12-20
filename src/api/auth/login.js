@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const config = require('config');
-const secret = config.get('jwt.secret');
+const secret = config.get("jwt.secret");
 const UserRepo = require('../db/user.js');
 const bcrypt = require('bcrypt');
 
@@ -29,7 +29,7 @@ let login = (req, res) => {
                         token: token
                     });
                 } else {
-                    return res.status(400).json({success: false, message: 'Incorrect email or password.'});
+                    return res.json({success: false, message: 'Incorrect email or password.'});
                 }
             } else {
                 return res.status(403).json({success: false, message: 'User is not exist.'});
