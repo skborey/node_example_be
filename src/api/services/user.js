@@ -9,9 +9,7 @@ const service = {
             if (err) return res.json({ success: false, error: err });
             return res.json({
                 success: true,
-                data: {
-                    email: data.email
-                }
+                email: data.email
             });
         });
     }
