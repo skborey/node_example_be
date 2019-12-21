@@ -161,7 +161,9 @@ const service = {
 
                         return res.json({
                             success: true,
-                            message: "Added new collaborator successfully."
+                            message: "Added new collaborator successfully.",
+                            id: data._id,
+                            email: data.email
                         });
                     });
                 } else {
