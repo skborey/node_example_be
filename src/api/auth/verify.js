@@ -18,9 +18,9 @@ let verifyToken = (req, res, next) => {
     InvalidTokenRepo.exists({'token': token}, (err, isExist) => {
 
       if (err || isExist) {
-        return res.json({success: false, message: 'Token is not valid'});
+        return res.json({success: false, message: 'Token is already used.'});
       } else {
-        jwt.verify(token, secret, (err, decoded) => {
+        jwt.verify(token, secret, (err, decoded) => { console.log(err);
 
           if (err) { return res.json({ success: false, message: 'Token is not valid' });
           } else {
