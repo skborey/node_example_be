@@ -1,6 +1,7 @@
 const CollectionRepo = require('../db/collection.js');
 const RestaurantRepo = require('../db/restaurant');
 const CollaborationRepo = require('../db/collaboration');
+const UserRepo = require('../db/user');
 
 const service = {
 
@@ -145,18 +146,33 @@ const service = {
     addRelation: (req, res) => {
 
         let collectionId = req.body.collection_id;
-        let collaborationId = req.body.collaboration_id;
+        let email = req.body.collaborator_email; // email instead of id
         let restaurantId = req.body.restaurant_id
-    
-        if (collectionId) {
+        let condition = {};
 
-            let condition = {}
+        if (email) {
+            UserRepo.findOne( {'email': email} , (err, data) => {
+                if (err) return res.json({ success: false, error: err });
+                if (data) {
+                    condition["collaborators"] = data._id;
+                    CollectionRepo.updateOne({_id: collectionId}, {$addToSet: condition}, (err, re) => {
 
-            if (collaborationId) {
-                condition["collaborations"] = collaborationId;
-            }
-            if (restaurantId) condition["restaurants"] = restaurantId;
+                        if (err) return res.status(500).json({ success: false, message: "Internal Sever Error." });
 
+                        return res.json({
+                            success: true,
+                            message: "Added new collaborator successfully."
+                        });
+                    });
+                } else {
+                    return res.json({
+                        success: false,
+                        message: "This email is not exist."
+                    });
+                }
+            });
+        } else if (restaurantId) {
+            condition["restaurants"] = restaurantId;
             CollectionRepo.updateOne({_id: collectionId}, {$addToSet: condition}, (err, re) => {
 
                 if (err) return res.status(500).json({ success: false, message: "Internal Sever Error." });
@@ -167,7 +183,7 @@ const service = {
                 });
             });
         } else {
-            return res.status(400).json({
+            return res.json({
                 success: false,
                 message: "Invalid request"
             });

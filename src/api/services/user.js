@@ -7,10 +7,18 @@ const service = {
 
         UserRepo.findOne( {'email': email} , (err, data) => {
             if (err) return res.json({ success: false, error: err });
-            return res.json({
-                success: true,
-                email: data.email
+
+            if (data) {
+                return res.json({
+                    success: true,
+                    email: data.email
+                });
+            } else {
+                return res.json({
+                success: false,
+                message: 'Not found'
             });
+            }
         });
     }
 }
