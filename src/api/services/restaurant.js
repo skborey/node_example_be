@@ -12,10 +12,17 @@ const service = {
         if (params.endBefore) condition._id = { $lt: ObjectId(params.endBefore) }
 
         RestaurantRepo.find( condition, (err, data) => {
+            
             if (err) return res.json({ success: false, error: err });
+
+            let restaurants = {};
+            data.forEach((d, i) => {
+                restaurants[d['_id']] = d;
+            });
+
             return res.json({
-            success: true,
-            data: data
+                success: true,
+                restaurants: restaurants
             });
         }).limit(10).sort({_id: 1});
     }

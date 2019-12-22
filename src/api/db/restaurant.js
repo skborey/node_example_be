@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const RestaurantSchema = new Schema(
   {
     name: String,
-    hours: String
+    open: String
   },
   {
     collection: 'restaurant'
