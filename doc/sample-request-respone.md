@@ -96,3 +96,29 @@
     "message": "Collection is removed successfully."
 }
 ```
+
+> Add collaborator to collation
+
+```
+{
+	"name": "First collection",
+	"email": "skborey@gamil.com",
+	"collection_id": "5dff6dd373605d12ad432532"
+}
+```
+
+```
+{
+    "success": true,
+    "collaborator": {
+        "_id": "5dff8dce2bd13417471fbc83",
+        "name": "First collection",
+        "email": "skborey@gamil.com"
+    },
+    "relationC2C": [
+        "5dff6dd373605d12ad432532",
+        "5dff8dce2bd13417471fbc83"
+    ],
+    "message": "Add new collaboration successfully. Next request add to collection."
+}
+```
