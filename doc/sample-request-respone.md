@@ -97,7 +97,7 @@
 }
 ```
 
-> Add collaborator to collation
+> Add collaborator to collection
 
 ```
 {
