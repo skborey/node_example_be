@@ -23,26 +23,43 @@ const service = {
                 if (user) {
                     CollectionRepo.findOne({ _id: collectionId}, (err, collection) => {
                         if (collection) {
-                            CollaborationRepo.insertMany({
-                                "name": name, 
-                                "email": email, 
-                                "collection_id": collectionId
-                            }, (err, data) => {
 
+                            CollaborationRepo.findOne({ $and: [
+                                    { email: email, },
+                                    { collection_id: collectionId }
+                                ]
+                            }, (err, isExist) => {
                                 if (err) return res.status(500).json({ success: false, message: "Internal Sever Error." });
-                                else {
-                                    let collaborators = {};
-                                    let relationC2C = [];
-                                    let c = data[0];
-
+                                
+                                if (isExist) {
                                     return res.json({
-                                        success: true,
-                                        collaborator: { _id: c._id, name: c.name, email: c.email},
-                                        relationC2C: [collectionId, c._id],
-                                        message: "Add new collaboration successfully. Next request add to collection.",
+                                        success: false,
+                                        message: "This email is already collaborator of the collection."
+                                    });
+                                } else {
+                                    CollaborationRepo.insertMany({
+                                        "name": name, 
+                                        "email": email, 
+                                        "collection_id": collectionId
+                                    }, (err, data) => {
+
+                                        if (err) return res.status(500).json({ success: false, message: "Internal Sever Error." });
+                                        else {
+                                            let collaborators = {};
+                                            let relationC2C = [];
+                                            let c = data[0];
+
+                                            return res.json({
+                                                success: true,
+                                                collaborator: { _id: c._id, name: c.name, email: c.email},
+                                                relationC2C: [collectionId, c._id],
+                                                message: "Add new collaboration successfully. Next request add to collection.",
+                                            });
+                                        }
                                     });
                                 }
                             });
+
                         } else {
                             return res.json({
                                 success: false,
