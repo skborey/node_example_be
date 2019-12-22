@@ -122,3 +122,79 @@
     "message": "Add new collaboration successfully. Next request add to collection."
 }
 ```
+
+> Get user assets
+
+```
+{
+    "success": true,
+    "data": {
+        "user": {
+            "_id": "5dff571956c16b0cc1a5bdfb",
+            "email": "skborey@gmail.com"
+        },
+        "collections": {
+            "5dffa9278a66d321644277d3": {
+                "_id": "5dffa9278a66d321644277d3",
+                "name": "fasdfsdaf",
+                "owner_email": "skborey@gmail.com",
+                "__v": 0
+            },
+            "5dffb0ef40161023460281b0": {
+                "_id": "5dffb0ef40161023460281b0",
+                "name": "sdf",
+                "owner_email": "skborey@gmail.com",
+                "__v": 0
+            },
+            "5dffb500a077b4257d8e6515": {
+                "_id": "5dffb500a077b4257d8e6515",
+                "name": "aaaaaaaaaaaaa",
+                "owner_email": "skborey@gmail.com",
+                "__v": 0
+            },
+            "5dffb511a077b4257d8e6516": {
+                "_id": "5dffb511a077b4257d8e6516",
+                "name": "aaaaaaaaaaaaaaaa",
+                "owner_email": "skborey@gmail.com",
+                "__v": 0
+            }
+        },
+        "relationC2C": [
+            [
+                "5dffb55da077b4257d8e651c",
+                "5dff571956c16b0cc1a5bdfb"
+            ],
+            [
+                "5dffbbaacbbabd2682ecb235",
+                "5dff571956c16b0cc1a5bdfb"
+            ]
+        ],
+        "relationC2R": [
+            [
+                "5dffa9278a66d321644277d3",
+                "5dff5f3e062a0c9057a043d4"
+            ],
+            [
+                "5dffb511a077b4257d8e6516",
+                "5dff5f3e062a0c9057a043d3"
+            ],
+            [
+                "5dffb511a077b4257d8e6516",
+                "5dff5f3e062a0c9057a043d4"
+            ]
+        ],
+        "retaurants": {
+            "5dff5f3e062a0c9057a043d3": {
+                "_id": "5dff5f3e062a0c9057a043d3",
+                "name": "Kushi Tsuru",
+                "open": "Mon-Sun 11:30 am - 9 pm"
+            },
+            "5dff5f3e062a0c9057a043d4": {
+                "_id": "5dff5f3e062a0c9057a043d4",
+                "name": "The Stinking Rose",
+                "open": "Mon-Thu, Sun 11:30 am - 10 pm  / Fri-Sat 11:30 am - 11 pm"
+            }
+        }
+    }
+}
+```
