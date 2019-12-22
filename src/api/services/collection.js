@@ -2,6 +2,7 @@ const CollectionRepo = require('../db/collection.js');
 const RestaurantRepo = require('../db/restaurant');
 const CollaborationRepo = require('../db/collaboration');
 const UserRepo = require('../db/user');
+const RestaurantRRepo = require('../db/restaurantRelation');
 
 const service = {
 
@@ -138,45 +139,38 @@ const service = {
         }
     },
 
-    addRelation: (req, res) => {
+    addRestaurant: (req, res) => {
 
         let collectionId = req.body.collection_id;
-        let email = req.body.collaborator_email; // email instead of id
-        let restaurantId = req.body.restaurant_id
-        let condition = {};
+        let restaurantId = req.body.restaurant_id;
 
-        if (email) {
-            UserRepo.findOne( {'email': email} , (err, data) => {
-                if (err) return res.json({ success: false, error: err });
-                if (data) {
-                    condition["collaborators"] = data._id;
-                    CollectionRepo.updateOne({_id: collectionId}, {$addToSet: condition}, (err, re) => {
+        if (restaurantId && collectionId) {
 
-                        if (err) return res.status(500).json({ success: false, message: "Internal Sever Error." });
+            //@TODO add should check restaurant and collection is exist first before add.
 
-                        return res.json({
-                            success: true,
-                            message: "Added new collaborator successfully.",
-                            id: data._id,
-                            email: data.email
-                        });
-                    });
-                } else {
+            RestaurantRRepo.findOne({
+                $and: [{restaurant_id: restaurantId}, {collection_id: collectionId}]
+            }, (error, isExist) => {
+                if (error) return res.status(500).json({ success: false, message: "Internal Sever Error." });
+
+                if (isExist) {
                     return res.json({
                         success: false,
-                        message: "This email is not exist."
+                        message: "This restaurant already added."
                     });
                 }
-            });
-        } else if (restaurantId) {
-            condition["restaurants"] = restaurantId;
-            CollectionRepo.updateOne({_id: collectionId}, {$addToSet: condition}, (err, re) => {
 
-                if (err) return res.status(500).json({ success: false, message: "Internal Sever Error." });
+                RestaurantRRepo.insertMany({
+                    restaurant_id: restaurantId,
+                    collection_id: collectionId
+                }, (err, re) => {
 
-                return res.json({
-                    success: true,
-                    message: "Added successfully."
+                    if (err) return res.status(500).json({ success: false, message: "Internal Sever Error." });
+
+                    return res.json({
+                        success: true,
+                        message: "Added successfully."
+                    });
                 });
             });
         } else {
