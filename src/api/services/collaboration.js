@@ -9,8 +9,14 @@ const service = {
         let collectionId = req.body.collection_id
         let name = req.body.name;
         let email = req.body.email;
+        let ownerEmail = req.decoded.email;
 
-        if (name && email && collectionId) {
+        if (ownerEmail === email) {
+            return res.json({
+                success: false,
+                message: "This email is the owner of collection.",
+            });
+        } else if (name && email && collectionId) {
 
             UserRepo.findOne( {'email': email} , (err, user) => {
                 if (err) return res.json({ success: false, error: err });
@@ -52,7 +58,7 @@ const service = {
                 }
             });
         } else {
-            return res.status(400).json({
+            return res.json({
                 success: false,
                 message: "Invalid Request"
             });
