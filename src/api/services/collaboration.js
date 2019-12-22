@@ -105,6 +105,29 @@ const service = {
             });
         }
     },
+
+    deleteCollaboration: (req, res) => {
+
+        let id = req.params.id;
+
+        if (id) {
+            CollaborationRepo.deleteOne({_id: id}, (err, data) => {
+
+                if (err) return res.status(500).json({ success: false, message: "Internal Sever Error." });
+                else {
+                    return res.json({
+                        success: true,
+                        message: "Delete successfully.",
+                    });
+                }
+            });
+        } else {
+            return res.json({
+                success: false,
+                message: "Invalid Request"
+            });
+        }
+    },
 }
 
 module.exports = service;
