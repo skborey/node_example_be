@@ -21,6 +21,7 @@ router.get('/logout',Auth.verifyToken, Logout);
  * Users
  */
 router.get('/user', Auth.verifyToken, User.getUser);
+router.get('/user/assets', Auth.verifyToken, User.getUserAssets);
 
 /**
  * Restaurant Api

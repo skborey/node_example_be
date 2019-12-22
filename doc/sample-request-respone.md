@@ -78,14 +78,21 @@
 ```
 {
     "success": true,
-    "collection": [
-        {
-            "_id": "5dff69844ec0ee10d6ee6b82",
-            "name": "First collection",
-            "owner_email": "skborey@gmail.com",
-            "__v": 0
-        }
-    ],
+    "collection": {
+        "_id": "5dff6ab62b0bb61141d24127",
+        "name": "First collection",
+        "owner_email": "skborey@gmail.com",
+        "__v": 0
+    },
     "message": "New collection added successfully."
+}
+```
+
+> Delete a collection, DELETE http://localhost:3001/api/v1/collections/5dff6ab62b0bb61141d24127
+
+```
+{
+    "success": true,
+    "message": "Collection is removed successfully."
 }
 ```

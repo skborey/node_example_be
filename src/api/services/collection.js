@@ -131,7 +131,7 @@ const service = {
                 }
             });
         } else {
-            return res.status(400).json({
+            return res.status.json({
                 success: false,
                 message: "Invalid Id"
             });
