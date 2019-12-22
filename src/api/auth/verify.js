@@ -17,22 +17,39 @@ let verifyToken = (req, res, next) => {
      */
     InvalidTokenRepo.exists({'token': token}, (err, isExist) => {
 
-      if (err || isExist) {
-        return res.json({success: false, message: 'Token is already used.'});
-      } else {
-        jwt.verify(token, secret, (err, decoded) => { console.log(err);
-
-          if (err) { return res.json({ success: false, message: 'Token is not valid' });
-          } else {
-            req.decoded = decoded;
-            req.token = token;
-            next();
-          }
+      if (err) { console.log(err);
+        return res.status(500).json({
+          success: false,
+          message: 'Internal Server Error.'
         });
       }
+
+      if (isExist) {
+        return res.status(401).json({
+          success: false,
+          message: 'Token is already used.'
+        });
+      }
+
+      jwt.verify(token, secret, (err, decoded) => {
+
+        if (err) { console.log(err);
+          return res.status(401).json({ 
+            success: false,
+            message: 'Token is not valid'
+          });
+        }
+    
+        req.decoded = decoded;
+        req.token = token;
+        next();
+      });
     });
   } else {
-    return res.json({ success: false, message: 'Auth token is not supplied'});
+    return res.json({
+      success: false, 
+      message: 'Auth token is not supplied'
+    });
   }
 }
 
