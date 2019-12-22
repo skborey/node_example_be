@@ -71,18 +71,13 @@ const service = {
             //     "collaborations": []
             // }
 
-            CollectionRepo.insertMany({
-                    "name": name,
-                    "owner_email": owner_email,
-                    "restaurants": [],
-                    "collaborations": []
-                }, (err, data) => {
+            CollectionRepo.insertMany({ "name": name, "owner_email": owner_email, }, (err, data) => {
 
                 if (err) return res.status(500).json({ success: false, message: "Internal Sever Error." });
 
                 return res.json({
                     success: true,
-                    data: data,
+                    collection: data[0],
                     message: "New collection added successfully."
                 });
             });

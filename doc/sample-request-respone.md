@@ -2,6 +2,14 @@
 
 ```
 {
+	"email": "skborey@gmail.com",
+	"password": "skborey"
+	
+}
+```
+
+```
+{
     "success": true,
     "restaurants": {
         "5dff5f3e062a0c9057a043d3": {
@@ -55,5 +63,29 @@
             "open": "Mon-Sun 11 am - 11 pm"
         }
     }
+}
+```
+
+> add new collection
+
+```
+{
+	"name": "First collection"
+	
+}
+```
+
+```
+{
+    "success": true,
+    "collection": [
+        {
+            "_id": "5dff69844ec0ee10d6ee6b82",
+            "name": "First collection",
+            "owner_email": "skborey@gmail.com",
+            "__v": 0
+        }
+    ],
+    "message": "New collection added successfully."
 }
 ```
