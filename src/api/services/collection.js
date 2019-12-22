@@ -116,20 +116,35 @@ const service = {
 
     deleteCollectionById: (req, res) => {
 
-        if (req.params.id) {
-            CollectionRepo.deleteOne({_id: req.params.id}, (err, data) => {
+        let id = req.params.id;
+
+        if (id) {
+
+            // remove from collaboration first
+            CollaborationRepo.deleteMany({collection_id: id}, (err, r) => {
                 if (err) return res.status(500).json({ success: false, message: "Internal Sever Error." });
-                else {
-                    if (data.deletedCount == 0)
-                        return res.json({
-                            success: true,
-                            message: "Collection is not exist."
-                        });
-                    else return res.json({
-                        success: true,
-                        message: "Collection is removed successfully."
+                console.log('number of deleted ', r.deletedCount);
+                
+                // remove from relation
+                RestaurantRRepo.deleteMany({collection_id: id}, (err2, r2) => {
+                    if (err2) return res.status(500).json({ success: false, message: "Internal Sever Error." });
+                    console.log('number of deleted ', r2.deletedCount);
+                    
+                    CollectionRepo.deleteOne({_id:id}, (err, data) => {
+                        if (err) return res.status(500).json({ success: false, message: "Internal Sever Error." });
+                        else {
+                            if (data.deletedCount == 0)
+                                return res.json({
+                                    success: true,
+                                    message: "Collection is not exist."
+                                });
+                            else return res.json({
+                                success: true,
+                                message: "Collection is removed successfully."
+                            });
+                        }
                     });
-                }
+                });
             });
         } else {
             return res.status.json({

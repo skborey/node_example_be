@@ -7,7 +7,7 @@ const RestaurantRelationSchema = new Schema(
     collection_id: String
   },
   {
-    collection: 'restaurant_relation'
+    collection: 'collection_restaurant'
   }
 );
 
