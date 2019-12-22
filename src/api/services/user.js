@@ -29,6 +29,9 @@ const service = {
                     // Find Collaboration relation - relationC2C
                     CollaborationRepo.find({email: email}, (err2, _relationC2C) => { if (err2) return res.json({ success: false, error: err2 });
                         response['relationC2C'] = _relationC2C.map((d, i) => [d.collection_id, user._id]);
+                        let collaborators = {}
+                        _collections.forEach((d, i) => { collaborators[d['_id']] = d; });
+                        response['collaborators'] = collaborators;
 
                         // Find collection - as collaborator
                         let ids = _relationC2C.map((d, i) => d.collection_id);
