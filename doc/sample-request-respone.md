@@ -1,3 +1,10 @@
+###DATABASE
+
+```
+ ./mongoimport.exe --uri "mongodb://heroku_p3ltnwsc:dnn197517dlbgfc6q3ehfvd6pf@ds121406.mlab.com:21406/heroku_p3ltnwsc" -c restaurant --file "restaurants.csv" --type csv --headerline
+
+```
+
 > get restaurants
 
 ```

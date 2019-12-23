@@ -7,7 +7,7 @@ var cors = require('cors');
 const app = express();
 
 const api = require('./api/route.js');
-const APP_PORT = config.get('app.port');
+const APP_PORT = process.env.PORT || config.get('app.port'); //config.get('app.port'); 
 
 // databse connection
 mongoose.connect(config.get('mongo.uri'), { useNewUrlParser: true });
@@ -26,4 +26,4 @@ app.use('/ping', (req, res) => res.json('ok'));
 app.use('/api/v1/', api);
 
 // launch our backend into a port
-app.listen(APP_PORT, () => console.log(`LISTENING ON PORT ${APP_PORT}`));
+app.listen( APP_PORT, () => console.log(`LISTENING ON PORT ${APP_PORT}`)); 
