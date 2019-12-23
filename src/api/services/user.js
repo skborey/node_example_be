@@ -8,77 +8,71 @@ const service = {
 
     getUserAssets: (req, res) => {
 
-        let response = {};
+        let response = {
+            user: {},
+            collections: {},
+            relationC2C: [],
+            relationC2R: [],
+            collaborators: {},
+            restaurants: {},
+        };
 
         let email = req.decoded.email
 
         //User
-        UserRepo.findOne( {'email': email} , (err, user) => {
-            if (err) return res.json({ success: false, error: err });
-
+        UserRepo.findOne( {'email': email} , (err0, user) => {
+            if (err0) return res.json({ success: false, error: err0 });
             if (user) {
-
                 response['user'] = { _id: user._id, email: user.email };
-                
-                // Find Collection - of owner
-                ColllectionRepo.find({ owner_email: user.email }, (err1, _collections) => { if (err1) return res.json({ success: false, error: err1 });
-                    let collections = {}
-                    _collections.forEach((d, i) => { collections[d['_id']] = d; });
-                    response['collections'] = collections;
 
-                    // Find Collaboration relation - relationC2C
-                    CollaborationRepo.find({email: email}, (err2, _relationC2C) => { if (err2) return res.json({ success: false, error: err2 });
-                        response['relationC2C'] = _relationC2C.map((d, i) => [d.collection_id, user._id]);
-                        let collaborators = {}
-                        _collections.forEach((d, i) => { collaborators[d['_id']] = d; });
-                        response['collaborators'] = collaborators;
+                // All collections
+                ColllectionRepo.find({}, (err1, _collections) => {
+                    if (err1) return res.json({ success: false, error: err1 });
+                    _collections.forEach((d, i) => { response['collections'][d._id] = d; });
 
-                        // Find collection - as collaborator
-                        let ids = _relationC2C.map((d, i) => d.collection_id);
-                        ColllectionRepo.find({ _id: {$in: ids}}, (err3, _notOwnerCollections) => { if (err3) return res.json({ success: false, error: err3 });
-                            _notOwnerCollections.forEach((d, i) => {
-                                response['collections'] = {...response['collections'], [d['_id']]: d }
-                            });
+                    // All relationC2C
+                    CollaborationRepo.find({}, (err2, _collaborations) => {
+                        if (err2) return res.json({ success: false, error: err2 });
+                        _collaborations.forEach((d, i) => {
+                            response['relationC2C'].push([d.collection_id, d._id]);
+                            // All collaborators
+                            response['collaborators'][d._id] = d;
+                        });
 
-                            // relationC2R, get all collection id relate to user
-                            ids = Object.keys(response['collections']).map((id) => id)
-                            RestaurantRRepo.find({ collection_id: {$in: ids}}, (err4, _relationC2R) => { if (err4) return res.json({ success: false, error: err4 });
-                                response['relationC2R'] = _relationC2R.map((d, i) => [d.collection_id, d.restaurant_id]);
+                        // All relationC2R
+                        let _restaurantIds = []
+                        RestaurantRRepo.find({}, (err3, _relationC2R) => {
+                            if (err3) return res.json({ success: false, error: err3 });
+                            _relationC2R.forEach((d, i) => {
+                                response['relationC2R'].push([d.collection_id, d.restaurant_id]);
+                                _restaurantIds.push(d.restaurant_id)
+                            })
 
-                                // Find Restaurant base on relation with collection
-                                ids = _relationC2R.map((d, i) => d.restaurant_id);
-                                RestaurantRepo.find({ _id: {$in: ids}}, (err5, _retaurants) => { if (err5) return res.json({ success: false, error: err5 });
-                                    let restaurants = {};
-                                    _retaurants.forEach((d, i) => { restaurants[d['_id']] = d; });
-                                    response['restaurants'] = restaurants;
+                            // restaurants in relation
+                            console.log(_restaurantIds);
+                            RestaurantRepo.find({ _id: {$in: _restaurantIds}}, (err4, _restaurants) => {
+                                if (err4) return res.json({ success: false, error: err4 });
+                                _restaurants.forEach((d, i) => { response['restaurants'][d._id] = d; });
 
-                                    if (Object.keys(restaurants).length < 10) { // we simply add restaurant more to user @for developement only
-                                        RestaurantRepo.find({}, (err6, _retaurants) => { if (err6) return res.json({ success: false, error: err6 });
-                                            let retaurants = {};
-                                            _retaurants.forEach((d, i) => { retaurants[d['_id']] = d; });
-                                            response['restaurants'] = retaurants;
+                                // additional 10 restaurants
+                                RestaurantRepo.find({}, (err5, _restaurants) => {
+                                    if (err5) return res.json({ success: false, error: err5 });
+                                    _restaurants.forEach((d, i) => { response['restaurants'][d._id] = d; });
 
-                                            return res.json({ /// OH MY GOD \\\\\ 
-                                                success: true,
-                                                data: response,
-                                            });
-                                        }).limit(20);
-                                    } else {
-                                        return res.json({ /// OH MY GOD \\\\\ 
-                                            success: true,
-                                            data: response,
-                                        });
-                                    }
-                                });
+                                    return res.json({ /// OH MY GOD \\\\\ 
+                                        success: true,
+                                        data: response,
+                                    });
+                                }).limit(10);
                             });
                         });
                     });
                 });
             } else {
                 return res.json({
-                success: false,
-                message: 'Not found'
-            });
+                    success: false,
+                    message: 'Not found'
+                });
             }
         });
     },
