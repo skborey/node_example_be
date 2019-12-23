@@ -35,7 +35,7 @@ router.get('/collections', Auth.verifyToken, CollectionService.getCollections);
 router.put('/collections', Auth.verifyToken, CollectionService.addNewCollection);
 router.post('/collections/rename', Auth.verifyToken, CollectionService.renameCollection);
 router.post('/collections/relation', Auth.verifyToken, CollectionService.addRestaurant);
-// router.delete('/collections/relation', Auth.verifyToken, CollectionService.removeRelation);
+router.delete('/collections/relation', Auth.verifyToken, CollectionService.removeRestaurant);
 router.delete('/collections/:id', Auth.verifyToken, CollectionService.deleteCollectionById); // this order will effect to rounting relatin could be consider as :id
 
 /**

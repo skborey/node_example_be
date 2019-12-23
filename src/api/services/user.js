@@ -48,14 +48,27 @@ const service = {
                                 // Find Restaurant base on relation with collection
                                 ids = _relationC2R.map((d, i) => d.restaurant_id);
                                 RestaurantRepo.find({ _id: {$in: ids}}, (err5, _retaurants) => { if (err5) return res.json({ success: false, error: err5 });
-                                    let retaurants = {};
-                                    _retaurants.forEach((d, i) => { retaurants[d['_id']] = d; });
-                                    response['retaurants'] = retaurants;
+                                    let restaurants = {};
+                                    _retaurants.forEach((d, i) => { restaurants[d['_id']] = d; });
+                                    response['restaurants'] = restaurants;
 
-                                    return res.json({ /// OH MY GOD \\\\\ 
-                                        success: true,
-                                        data: response,
-                                    });
+                                    if (Object.keys(restaurants).length < 10) { // we simply add restaurant more to user @for developement only
+                                        RestaurantRepo.find({}, (err6, _retaurants) => { if (err6) return res.json({ success: false, error: err6 });
+                                            let retaurants = {};
+                                            _retaurants.forEach((d, i) => { retaurants[d['_id']] = d; });
+                                            response['restaurants'] = retaurants;
+
+                                            return res.json({ /// OH MY GOD \\\\\ 
+                                                success: true,
+                                                data: response,
+                                            });
+                                        }).limit(20);
+                                    } else {
+                                        return res.json({ /// OH MY GOD \\\\\ 
+                                            success: true,
+                                            data: response,
+                                        });
+                                    }
                                 });
                             });
                         });

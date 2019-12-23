@@ -196,30 +196,23 @@ const service = {
         }
     },
 
-    removeRelation: (req, res) => {
+    removeRestaurant: (req, res) => {
 
         let collectionId = req.body.collection_id;
-        let collaborationId = req.body.collaboration_id;
         let restaurantId = req.body.restaurant_id
     
-        if (collectionId) {
-
-            let condition = {}
-
-            if (collaborationId) condition["collaborations"] = collaborationId;
-            if (restaurantId) condition["restaurants"] = restaurantId;
-
-            CollectionRepo.updateOne({_id: collectionId}, {$pull: condition}, (err, re) => {
-
-                if (err) return res.status(500).json({ success: false, message: "Internal Sever Error." });
+        if (collectionId && restaurantId) {
+            RestaurantRRepo.deleteMany({$and: [{collection_id: collectionId, restaurant_id: restaurantId}]}, (err, r) => {
+                if (err) return res.status(500).json({ success: false, message: "Internal Sever Error.", error: err });
+                console.log('number of deleted ', r.deletedCount);
 
                 return res.json({
                     success: true,
-                    message: "Removed successfully."
+                    message: "The restaurant is remove successfully."
                 });
             });
         } else {
-            return res.status(400).json({
+            return res.json({
                 success: false,
                 message: "Invalid request"
             });

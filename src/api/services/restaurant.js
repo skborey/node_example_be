@@ -24,7 +24,7 @@ const service = {
                 success: true,
                 restaurants: restaurants
             });
-        }).limit(10).sort({_id: 1});
+        }).limit(20).sort({_id: 1});
     }
 }
 

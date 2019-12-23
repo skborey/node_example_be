@@ -3,7 +3,7 @@ const config = require('config');
 const secret = config.get('jwt.secret');
 const InvalidTokenRepo = require('../db/invalidToken.js');
 
-let verifyToken = (req, res, next) => {
+let verifyToken = (req, res, next) => { console.log(req);
 
   let token = req.headers['x-access-token'] || req.headers['authorization'];
 
